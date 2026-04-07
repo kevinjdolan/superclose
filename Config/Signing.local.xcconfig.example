@@ -1,0 +1,12 @@
+// Copy this file to Config/Signing.local.xcconfig and fill in your real values.
+// Keep the real file untracked.
+
+DEVELOPMENT_TEAM = YOURTEAMID
+CODE_SIGN_IDENTITY = Apple Development
+CODE_SIGN_STYLE = Automatic
+DEVELOPER_ID_APPLICATION = Developer ID Application: Your Name (YOURTEAMID)
+NOTARY_KEYCHAIN_PROFILE = SuperCloseNotary
+APPLE_ID =
+APPLE_APP_SPECIFIC_PASSWORD =
+APPLE_TEAM_ID = YOURTEAMID
+

@@ -1,0 +1,27 @@
+#!/bin/zsh
+#
+# superclose
+# Thin shell wrapper that locates an installed SuperClose.app bundle (next to
+# this script, in /Applications, or in ~/Applications) and execs its embedded
+# binary, forwarding any arguments. Lets users invoke SuperClose from the
+# command line — including flags like `--help` and `--dump` — without
+# remembering the path inside the .app bundle. Shipped alongside SuperClose.app
+# in the release zip and installed by the Homebrew cask.
+
+set -euo pipefail
+
+SCRIPT_PATH=$(ruby -e 'require "pathname"; puts Pathname.new(ARGV[0]).realpath' "$0")
+SCRIPT_DIR=${SCRIPT_PATH:A:h}
+
+for candidate in \
+  "$SCRIPT_DIR/SuperClose.app/Contents/MacOS/SuperClose" \
+  "/Applications/SuperClose.app/Contents/MacOS/SuperClose" \
+  "$HOME/Applications/SuperClose.app/Contents/MacOS/SuperClose"; do
+  if [[ -x "$candidate" ]]; then
+    exec "$candidate" "$@"
+  fi
+done
+
+echo "SuperClose.app was not found. Install the app bundle first."
+exit 1
+
