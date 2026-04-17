@@ -14,20 +14,20 @@ SuperClose is a native macOS utility that makes it easy to clean up your workspa
 ### Shell Install
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/kevin/superclose/main/scripts/install.sh | zsh
+curl -fsSL https://raw.githubusercontent.com/kevinjdolan/superclose/main/scripts/install.sh | zsh
 ```
 
-The script downloads SuperClose 0.1.0 from GitHub Releases, installs it into `/Applications`, and then walks you through assigning a global keyboard shortcut (e.g. `⌃⌥⌘⌫`) via Shortcuts.app, since macOS does not let installers register system-wide hotkeys directly. It will offer to open Shortcuts.app and System Settings → Keyboard for you.
+The script downloads SuperClose 0.1.0 from GitHub Releases, installs it into `/Applications`, prompts for where to install the `superclose` shell command, and can optionally wire up a global shortcut (default: `⌃⌥⌘⌫`) through `skhd`. If Homebrew or `skhd` are missing, it will offer to install them, update `~/.skhdrc`, and restart the `skhd` service for you.
 
-The pinned version in [`scripts/install.sh`](scripts/install.sh) tracks `MARKETING_VERSION` in [`Config/Project.xcconfig`](Config/Project.xcconfig) — bump both together when cutting a release. To install a different version, set `SUPERCLOSE_VERSION=x.y.z` before running the script.
+The pinned version in [scripts/install.sh](/Users/kevin/code/superclose/scripts/install.sh) tracks `MARKETING_VERSION` in [Config/Project.xcconfig](/Users/kevin/code/superclose/Config/Project.xcconfig) — bump both together when cutting a release. To install a different version, set `SUPERCLOSE_VERSION=x.y.z` before running the script.
 
 ### Homebrew
 
-We are awaiting approval for submission to Homebrew
+The maintained cask lives at [packaging/homebrew/superclose.rb](/Users/kevin/code/superclose/packaging/homebrew/superclose.rb). Upstream submission instructions live in [docs/brew-cask-submission.md](/Users/kevin/code/superclose/docs/brew-cask-submission.md).
 
 ## Usage
 
-Launch SuperClose from `/Applications`, Spotlight, or via the `scripts/superclose` CLI wrapper. The first run will prompt for Accessibility permission, which is required to inspect window state across other apps.
+Launch SuperClose from `/Applications`, Spotlight, or by running `superclose` if you installed the shell command into a directory on your `PATH`. The first run will prompt for Accessibility permission, which is required to inspect window state across other apps.
 
 When the review window opens, each row shows an app with its open and hidden window counts and a default action chosen by SuperClose's heuristics. Adjust any rows you want, then press `Enter` (or click `Run`) to apply every selection at once. `Esc` cancels without touching anything.
 
@@ -48,7 +48,7 @@ When the review window opens, each row shows an app with its open and hidden win
 
 ### CLI
 
-The `scripts/superclose` wrapper launches the installed app bundle and forwards arguments. `--help` prints usage and `--dump` prints the candidate app list without showing the UI, which is handy for scripting or debugging the heuristics.
+The installed `superclose` command is backed by the [scripts/superclose](/Users/kevin/code/superclose/scripts/superclose) wrapper, which launches the installed app bundle and forwards arguments. `--help` prints usage and `--dump` prints the candidate app list without showing the UI, which is handy for scripting or debugging the heuristics.
 
 # Contributing Guide
 
@@ -62,7 +62,7 @@ The `scripts/superclose` wrapper launches the installed app bundle and forwards 
 
 ## Local Run
 
-SuperClose is a native Swift/AppKit app targeting macOS 14+ and built with Swift 6. The Xcode project is generated from `scripts/generate-project.rb` (requires the `xcodeproj` Ruby gem) — regenerate it whenever you add or remove source files:
+SuperClose is a native Swift/AppKit app targeting macOS 14+ and built with Swift 6. The Xcode project is generated from [scripts/generate-project.rb](/Users/kevin/code/superclose/scripts/generate-project.rb) (requires the `xcodeproj` Ruby gem) — regenerate it whenever you add or remove source files:
 
 ```sh
 ruby scripts/generate-project.rb

@@ -1,14 +1,4 @@
 #!/bin/zsh
-#
-# package-release.sh
-# Top-level release driver. Runs `archive-release.sh`, optionally
-# `notarize-release.sh` (skipped with `--skip-notarization`), then stages
-# SuperClose.app alongside the `superclose` CLI wrapper, zips them into
-# dist/SuperClose-<version>.zip, and writes the matching .sha256. If a
-# `--repo owner/name` (or `GITHUB_REPOSITORY`) is supplied, it also calls
-# `generate-cask.sh` to refresh the Homebrew cask with the new version
-# and checksum.
-
 set -euo pipefail
 
 SCRIPT_DIR=${0:A:h}
@@ -53,9 +43,7 @@ cp -R "$APP_PATH" "$STAGING_DIR/$APP_NAME"
 cp "$SCRIPT_DIR/superclose" "$STAGING_DIR/superclose"
 
 rm -f "$ZIP_PATH" "$SHA_PATH"
-(cd "$STAGING_DIR" && ditto -c -k --keepParent "$APP_NAME" "$ZIP_PATH.tmp")
 (cd "$STAGING_DIR" && zip -qry "$ZIP_PATH" "$APP_NAME" superclose)
-rm -f "$ZIP_PATH.tmp"
 
 shasum -a 256 "$ZIP_PATH" > "$SHA_PATH"
 
@@ -66,4 +54,3 @@ fi
 
 echo "Packaged $ZIP_PATH"
 echo "SHA256 written to $SHA_PATH"
-

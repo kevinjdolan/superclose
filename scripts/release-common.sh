@@ -1,16 +1,8 @@
 #!/bin/zsh
-#
-# release-common.sh
-# Shared environment and helper functions sourced by the other release
-# scripts (archive / notarize / package / generate-cask). Defines build, dist,
-# archive, export, and staging paths; reads MARKETING_VERSION and signing
-# values out of Config/Project.xcconfig and Config/Signing.local.xcconfig; and
-# exposes guards (`ensure_full_xcode`, `require_signing_config`) plus path
-# helpers (`release_zip_path`, `release_sha_path`) used during a release.
-
 set -euo pipefail
 
-ROOT_DIR=${0:A:h:h}
+SCRIPT_PATH=${(%):-%N}
+ROOT_DIR=${SCRIPT_PATH:A:h:h}
 PROJECT_FILE="$ROOT_DIR/SuperClose.xcodeproj"
 PROJECT_CONFIG="$ROOT_DIR/Config/Project.xcconfig"
 SIGNING_CONFIG="$ROOT_DIR/Config/Signing.local.xcconfig"
@@ -85,4 +77,3 @@ function release_sha_path() {
 function prepare_build_directories() {
   mkdir -p "$BUILD_DIR" "$DIST_DIR"
 }
-

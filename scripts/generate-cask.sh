@@ -1,19 +1,11 @@
 #!/bin/zsh
-#
-# generate-cask.sh
-# Regenerates packaging/homebrew/superclose.rb for a given release. Takes
-# `--version`, `--sha256`, and an optional `--repo owner/name`, and writes a
-# cask pointing at the matching GitHub release zip. Called automatically by
-# `package-release.sh` when a repo is supplied; can also be run by hand to
-# refresh the cask after a manual upload.
-
 set -euo pipefail
 
 ROOT_DIR=${0:A:h:h}
 OUTPUT_FILE="$ROOT_DIR/packaging/homebrew/superclose.rb"
 VERSION=""
 SHA256=""
-REPO="kevin/superclose"
+REPO="kevinjdolan/superclose"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -71,4 +63,3 @@ end
 EOF
 
 echo "Wrote $OUTPUT_FILE"
-

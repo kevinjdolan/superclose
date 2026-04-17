@@ -1,19 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
-#
-# generate-project.rb
-# Regenerates SuperClose.xcodeproj from the on-disk source tree using the
-# `xcodeproj` gem. Mirrors the SuperClose/, SuperCloseTests/, packaging/,
-# scripts/, and Config/ folders into matching project groups, declares the
-# app and unit-test targets (Swift 6, macOS 14, hardened runtime, automatic
-# signing), wires Project.xcconfig as the base configuration, registers the
-# Assets.xcassets resource, and writes a shared `SuperClose` scheme. Re-run
-# whenever source files are added, removed, or moved.
 
+require "fileutils"
 require "xcodeproj"
 
 root = File.expand_path("..", __dir__)
 project_path = File.join(root, "SuperClose.xcodeproj")
+FileUtils.rm_rf(project_path)
 project = Xcodeproj::Project.new(project_path)
 
 project_config_ref = project.main_group.new_file("Config/Project.xcconfig")
@@ -22,7 +15,7 @@ app_group = project.main_group.new_group("SuperClose", "SuperClose")
 tests_group = project.main_group.new_group("SuperCloseTests", "SuperCloseTests")
 packaging_group = project.main_group.new_group("packaging", "packaging")
 packaging_group.new_group("homebrew", "packaging/homebrew")
-scripts_group = project.main_group.new_group("scripts", "scripts")
+project.main_group.new_group("scripts", "scripts")
 config_group = project.main_group["Config"] || project.main_group.new_group("Config", "Config")
 config_group.new_file("Signing.local.xcconfig.example")
 

@@ -21,7 +21,7 @@ Run:
 ./scripts/generate-cask.sh \
   --version 0.1.0 \
   --sha256 <release-zip-sha256> \
-  --repo kevin/superclose
+  --repo kevinjdolan/superclose
 ```
 
 That rewrites [packaging/homebrew/superclose.rb](/Users/kevin/code/superclose/packaging/homebrew/superclose.rb) with the current release values.
@@ -59,7 +59,7 @@ Keep it short and concrete:
 
 If the upstream submission is rejected because the project is too new or lacks enough public presence yet:
 
-1. Create your own tap, such as `kevin/homebrew-superclose`.
+1. Create your own tap, such as `kevinjdolan/homebrew-superclose`.
 2. Commit the same cask there.
 3. Publish install instructions from that tap until the project is established enough to retry upstream.
 

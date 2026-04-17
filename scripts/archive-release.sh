@@ -1,12 +1,4 @@
 #!/bin/zsh
-#
-# archive-release.sh
-# Builds a signed Release archive of SuperClose.app and exports it for
-# notarization. Generates an ExportOptions.plist from the Developer ID values
-# in Config/Signing.local.xcconfig, then runs `xcodebuild archive` followed
-# by `xcodebuild -exportArchive` so the resulting bundle lands at
-# build/export/SuperClose.app, ready for `notarize-release.sh`.
-
 set -euo pipefail
 
 SCRIPT_DIR=${0:A:h}
@@ -65,4 +57,3 @@ xcodebuild \
   -exportOptionsPlist "$EXPORT_OPTIONS_PLIST"
 
 echo "Archived and exported $EXPORT_PATH/$APP_NAME"
-

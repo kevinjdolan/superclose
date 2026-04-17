@@ -1,12 +1,4 @@
 #!/bin/zsh
-#
-# notarize-release.sh
-# Submits the exported SuperClose.app from `archive-release.sh` to Apple's
-# notary service and staples the resulting ticket. Zips the bundle into
-# build/notary, runs `xcrun notarytool submit --wait` using the keychain
-# profile named in Config/Signing.local.xcconfig, then `xcrun stapler staple`
-# / `validate` so Gatekeeper accepts the app offline.
-
 set -euo pipefail
 
 SCRIPT_DIR=${0:A:h}
@@ -41,4 +33,3 @@ xcrun stapler staple "$APP_PATH"
 xcrun stapler validate "$APP_PATH"
 
 echo "Notarized and stapled $APP_PATH"
-
